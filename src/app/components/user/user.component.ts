@@ -22,7 +22,16 @@ export class UserComponent {
     
   }
   ngOnInit() {
-   
+    this.user = {
+      firstName: 'Vamsi',
+      lastName: 'Devalla',
+      age: 24,
+      address: {
+        street: '62 rutgers rd',
+        city: 'Piscataway',
+        state: 'NJ'
+      }
+    }
   }
 
 }
