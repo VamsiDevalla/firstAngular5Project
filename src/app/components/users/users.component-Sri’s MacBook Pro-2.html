@@ -2,7 +2,7 @@
   <button class="btn btn-dark mb-2" (click)="showUserForm = !showUserForm">Add User</button>
   <div class="card card-body mb-2" *ngIf="showUserForm">
     <h2>Add User:</h2>
-    <form (ngSubmit)="addUser()">
+    <form (submit)="addUser()">
       <div class="form-group">
         <label>First Name:</label>
         <input type="text" class="form-control" name="user.firstName">
@@ -31,6 +31,7 @@
     </form>
   </div>
   <h4>Users:</h4>
+  <button (ngClick)="showUserForm ? '' : 'hello'">find the hidden heading</button>
   <ul class="list-unstyled" *ngIf="loaded && users.length > 0">
     <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-info]="!user.isActive" [style.border-color]="user.isActive?'blue':'red'">
       <h4 [ngClass]="currentClasses">{{user.firstName}} {{user.lastName}}
@@ -38,6 +39,7 @@
           <button class="btn btn-dark btn-small" (click)="user.showExtended=!user.showExtended">
             <i [class]="user.showExtended ? 'fa fa-minus' :'fa fa-plus'"></i>
           </button>
+        </small>
       </h4>
       <div class="row" *ngIf="user.showExtended">
         <div class="col-sm-4">
@@ -57,5 +59,3 @@
   <h4 *ngIf="users.length == 0">No users found</h4>
   <h4 *ngIf="!loaded">Loading...</h4>
 </div>
-
-        </small>
