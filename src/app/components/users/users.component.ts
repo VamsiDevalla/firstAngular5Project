@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit,ViewChild } from '@angular/core'
 import { User } from '../../models/User'
 
 @Component({
@@ -12,6 +12,11 @@ export class UsersComponent implements OnInit {
   showUserForm: boolean
   enabled: boolean = true
   currentClasses = {}
+  user: User ={
+    firstName: "",
+    lastName:""
+  }
+  @ViewChild('userForm') form: any;
   constructor() { }
 
   ngOnInit() {
@@ -99,4 +104,19 @@ export class UsersComponent implements OnInit {
       //'big-text': true,
     }
   }
+  onSubmit({value, valid}: {value: User, valid: boolean}) {
+    if(!valid){
+      console.log('Form is not valid');
+    } else {
+      console.log(value)
+      value.isActive = true;
+      value.joined = new Date();
+      value.showExtended = true;
+      value.age = 24
+      console.log(value)
+      this.users.unshift(value);
+      this.form.reset();
+    }
+  }
+
 }

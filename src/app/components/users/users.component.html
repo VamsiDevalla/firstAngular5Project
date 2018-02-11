@@ -2,16 +2,48 @@
   <button class="btn btn-dark mb-2" (click)="showUserForm = !showUserForm">Add User</button>
   <div class="card card-body mb-2" *ngIf="showUserForm">
     <h2>Add User:</h2>
-    <form (ngSubmit)="addUser()">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
       <div class="form-group">
         <label>First Name:</label>
-        <input type="text" class="form-control" name="user.firstName">
+        <input 
+        type="text" 
+        [(ngModel)]="user.firstName" 
+        [ngClass]="{'is-invalid':userFirstName.errors && userFirstName.touched}"
+        class="form-control" 
+        name="firstName"
+        #userFirstName="ngModel"
+        required
+        minlength="2"
+        >
+        <div [hidden]="!userFirstName.errors?.required" class="invalid-feedback">
+          First name required
+        </div>
+  
+        <div [hidden]="!userFirstName.errors?.minlength" class="invalid-feedback">
+            Must be at least 2 characters
+        </div>
       </div>
       <div class="form-group">
         <label>Last Name:</label>
-        <input type="text" class="form-control" name="user.lastName">
+        <input 
+        type="text" 
+        [(ngModel)]="user.lastName" 
+        [ngClass]="{'is-invalid':userLastName.errors && userLastName.touched}"
+        class="form-control" 
+        name="lastName"
+        #userLastName="ngModel"
+        required
+        minlength="2"
+        >
+        <div [hidden]="!userLastName.errors?.required" class="invalid-feedback">
+          last name required
+        </div>
+  
+        <div [hidden]="!userLastName.errors?.minlength" class="invalid-feedback">
+            Must be at least 2 characters
+        </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>Age:</label>
         <input type="number" class="form-control" name="user[age]">
       </div>
@@ -26,7 +58,7 @@
       <div class="form-group">
         <label>State:</label>
         <input type="text" class="form-control" name="user[state]">
-      </div>
+      </div> -->
       <button [disabled]="!enabled" class="btn btn-success btn-block mb-2">Add A New User</button>
     </form>
   </div>
