@@ -68,5 +68,8 @@ export class UsersService {
   getUsers(){
     return this.users
   }
+  setUser(user: User){
+    this.users.unshift(user)
+  }
 
 }

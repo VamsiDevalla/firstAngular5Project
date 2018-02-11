@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
       value.showExtended = true;
       value.age = 24
       console.log(value)
-      this.users.unshift(value);
+      this.usersService.setUser(value);
       this.form.reset();
     }
   }
