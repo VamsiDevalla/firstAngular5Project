@@ -22,7 +22,9 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.showUserForm = false
-    this.users=this.usersService.getUsers()
+    this.usersService.getUsers().subscribe(data => {
+      this.users = data
+    })
     this.addClasses()
   }
   addUser(user:User){

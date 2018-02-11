@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core'
 import { User } from '../models/User'
+import { Observable } from 'rxjs/Observable'
+import { of } from 'rxjs/observable/of'
+
 @Injectable()
 export class UsersService {
  users: User[]
@@ -65,8 +68,8 @@ export class UsersService {
       }
     ]
   }
-  getUsers(){
-    return this.users
+  getUsers(): Observable<User[]>{
+    return of(this.users)
   }
   setUser(user: User){
     this.users.unshift(user)
