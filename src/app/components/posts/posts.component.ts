@@ -8,6 +8,8 @@ import { Post } from '../../models/Post'
 })
 export class PostsComponent implements OnInit {
   posts: Post[]
+  isEditing: Boolean 
+  currentPost: Post
   constructor(private PostsService: PostsService) { }
 
   ngOnInit() {
@@ -18,6 +20,33 @@ export class PostsComponent implements OnInit {
 
   onNewPost(post : Post){
     this.posts.unshift(post)
+  }
+
+  onUpdatedPost(post:Post){
+    this.isEditing = false
+    this.posts.forEach((cur,index)=>{
+      if(post.id==cur.id){
+        this.posts.splice(index,1)
+        this.posts.unshift(post)
+      }
+    })
+  }
+
+  removePost(post: Post){
+    if(confirm('are you sure?')){
+      this.PostsService.removePost(post.id).subscribe(()=>{
+        this.posts.forEach((cur,index)=>{
+          if(post.id==cur.id){
+            this.posts.splice(index,1)
+          }
+        })
+      })
+    }
+  }
+
+  editPost(post: Post){
+    this.currentPost = post
+    this.isEditing = true
   }
 
 }

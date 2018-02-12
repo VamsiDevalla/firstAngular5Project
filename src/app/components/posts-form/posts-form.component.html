@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card car-body">
-    <form #postForm='ngForm' (ngSubmit)="onSubmit(postForm)" >
+    <form #postForm='ngForm' (ngSubmit)="isEditing? onEdit(postForm):onSubmit(postForm)" >
       <div class="form-group">
         <label>Title</label>
         <input type="text" 
@@ -39,7 +39,9 @@
             Body must have 10 letters
           </div>
       </div>
-      <button class="btn btn-primary btn-block">Post</button>
+      <input type="hidden" name="id" [(ngModel)]='post.id'>
+      <button *ngIf = '!isEditing' class="btn btn-primary btn-block">Post</button>
+      <button *ngIf = 'isEditing' class="btn btn-warning btn-block">Edit Post</button>
     </form>
   </div>
 </div>

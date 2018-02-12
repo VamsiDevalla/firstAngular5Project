@@ -19,4 +19,15 @@ export class PostsService {
    return this.http.post<Post>(this.postsUrl,post,HttpOptions)
  }
 
+ updatePost(post: Post):Observable<Post>{
+   const url = `${this.postsUrl}/${post.id}`
+   return this.http.put<Post>(url,post,HttpOptions)
+ }
+
+ removePost(post: Post | number):Observable<Post>{
+  const id = typeof post === 'number' ? post : post.id
+  const url = `${this.postsUrl}/${id}`
+  return this.http.put<Post>(url,HttpOptions)
+ }
+
 }

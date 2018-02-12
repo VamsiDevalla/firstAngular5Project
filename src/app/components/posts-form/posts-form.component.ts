@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,EventEmitter,Output } from '@angular/core';
+import { Component, OnInit, ViewChild,EventEmitter,Output,Input } from '@angular/core';
 import { PostsService} from '../../services/posts.service'
 import { Post } from '../../models/Post'
 
@@ -9,12 +9,15 @@ import { Post } from '../../models/Post'
 })
 export class PostsFormComponent implements OnInit {
  @ViewChild('postForm') form : any
- post: Post
+ @Input() post: Post
+ @Input() isEditing: boolean = false
  @Output() newPost: EventEmitter<Post> = new EventEmitter()
+ @Output() updatedPost: EventEmitter<Post> = new EventEmitter()
   constructor(private PostsService: PostsService) { }
 
   ngOnInit() {
     this.post = {
+      id:0,
       title:"",
       body: "",
     }
@@ -27,6 +30,18 @@ export class PostsFormComponent implements OnInit {
         this.newPost.emit(post)
       });
       this.form.reset();
+    }
+  }
+  onEdit({value, valid}: {value: Post, valid: boolean}) {
+    if(!valid){
+      console.log('Form is not valid');
+    } else {
+      this.PostsService.updatePost(value).subscribe(post =>{
+        this.isEditing = false
+        this.updatedPost.emit(post)
+        this.form.reset()
+      });
+      
     }
   }
 
