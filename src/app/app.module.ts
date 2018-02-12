@@ -12,6 +12,8 @@ import { UsersService } from './services/users.service';
 import { PostsComponent } from './components/posts/posts.component';
 import { PostsService } from './services/posts.service';
 import { PostsFormComponent } from './components/posts-form/posts-form.component';
+import { AppRouterModule } from './/app-router.module';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,14 @@ import { PostsFormComponent } from './components/posts-form/posts-form.component
     UsersComponent,
     NavbarComponent,
     PostsComponent,
-    PostsFormComponent
+    PostsFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    AppRouterModule,
   ],
   providers: [UsersService, PostsService],
   bootstrap: [AppComponent]
