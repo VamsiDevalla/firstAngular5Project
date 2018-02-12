@@ -15,6 +15,10 @@ export class PostsService {
    return this.http.get<Post[]>(this.postsUrl)
  }
 
+ getPost(id):Observable<Post>{
+  return this.http.get<Post>(`${this.postsUrl}/${id}`)
+}
+
  sendPost(post: Post):Observable<Post>{
    return this.http.post<Post>(this.postsUrl,post,HttpOptions)
  }
