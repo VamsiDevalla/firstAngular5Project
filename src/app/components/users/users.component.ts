@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit {
   addClasses(){
     this.currentClasses= {
       'card-header':this.enabled,
-      //'big-text': true,
+      'big-text': true,
     }
   }
   onSubmit({value, valid}: {value: User, valid: boolean}) {
