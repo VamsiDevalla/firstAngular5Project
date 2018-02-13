@@ -1,8 +1,8 @@
-var 
-    bodyParser       = require("body-parser"),
+var bodyParser       = require("body-parser"),
     mongoose         = require("mongoose"),
     express          = require("express"),
     cors             = require('cors'),
+    jwt              = require('jsonwebtoken');
     app              = express()
 
 mongoose.connect("mongodb://localhost/sandBox")
@@ -29,7 +29,7 @@ var postSchema = new mongoose.Schema({
 var Post = mongoose.model("Post", postSchema),
     User = mongoose.model("User", userSchema)
 
-    app.post('/signUp', function (req, res) {
+    app.post('/signup', function (req, res) {
         User.create(req.body, function (err, data) {
             if (!err) {
                 res.send(data)
@@ -39,30 +39,40 @@ var Post = mongoose.model("Post", postSchema),
         })
     })
     
-    app.post('/logIn', function (req, res) {
+    app.post('/login', function (req, res) {
         User.findOne({
             Username: req.body.Username,
             Password: req.body.Password
         }, function (err, data) {
-            if (!err) {
-                 
+            if (!err && data!=null) {
+                var token = jwt.sign({'uname':data.username}, 'devalla-secret-key', {
+                    expiresIn: '1h'
+                  });
+                  res.send({"loggedIn":true, 'token':token});
             } else {
                 console.log(err);
             }
         })
     })
+
+    app.use(function(req, res, next) {
+        var token = req.headers.authorization;
+        if(token) {
+          jwt.verify(token, 'devalla-secret-key', function (err, decoded) {
+            if (err) {
+              console.log('Error');
+            } else {
+                req.decoded = decoded;
+                console.log(req.decoded);
+                next();
+            }
+          });
+        } else {
+          console.log("hi")
+        }
+      });
     
-    app.post('/createJob', function (req, res) {
-        Job.create(req.body, function (err, data) {
-            if (!err) {
-                res.send({
-                    "flag": "success"
-                });
-            } else {
-                console.log(err);
-            }
-        })
-    })
+
     
 
 app.post('/posts', function (req, res) {
@@ -76,6 +86,7 @@ app.post('/posts', function (req, res) {
 })
 
 app.get('/posts',function(req,res){
+    console.log("hi")
     Post.find({}, function (err, data) {
         if (!err) {
             res.send(data);

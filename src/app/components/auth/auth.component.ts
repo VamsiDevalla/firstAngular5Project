@@ -1,5 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import {User} from '../../models/Auth'
+import {AuthService} from '../../services/auth.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +12,7 @@ export class AuthComponent implements OnInit {
 @ViewChild('loginForm') form: any
 user: User
 
-  constructor() { }
+constructor(private auth: AuthService,private rout: Router) { }
 
   ngOnInit() {
     this.user = {
@@ -20,9 +22,9 @@ user: User
   }
   login({value,valid}:{value:User,valid:boolean}){
     if(valid){
-      console.log(value)
+      this.auth.login(value)
     }else{
-      console.log('no user found')
+      this.form.reset()
     }
   }
 

@@ -14,9 +14,11 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     this.PostsService.getPosts().subscribe(posts => {
+      console.log("getting posts")
       this.posts = posts
     })
   }
+
 
   onNewPost(post : Post){
     this.posts.unshift(post)

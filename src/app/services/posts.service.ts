@@ -2,21 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from "../models/Post"
 import { Observable } from 'rxjs/Observable';
+import {AuthService} from '../services/auth.service'
+
 
 const HttpOptions = {
- headers : new HttpHeaders({'Content-Type':'Application/json'})
+  headers: new HttpHeaders({'Content-Type':'Application/json'})
 }
-
 @Injectable()
 export class PostsService {
   postsUrl = "http://localhost:2000/posts"
-  constructor(private http : HttpClient) { }
+
+  constructor(private http : HttpClient,private auth:AuthService) {
+     
+   }
  getPosts():Observable<Post[]>{
-   return this.http.get<Post[]>(this.postsUrl)
+   console.log(this.auth.fetchToken())
+
+  //  HttpOptions.headers.set('authorization', this.auth.fetchToken())
+   return this.http.get<Post[]>(this.postsUrl,{
+    headers: new HttpHeaders().set('authorization', this.auth.fetchToken())
+  })
  }
 
  getPost(id:string):Observable<Post>{
-  return this.http.get<Post>(`${this.postsUrl}/${id}`)
+  return this.http.get<Post>(`${this.postsUrl}/${id}`,{
+    headers: new HttpHeaders().set('authorization', this.auth.fetchToken())
+  })
 }
 
  sendPost(post: Post):Observable<Post>{

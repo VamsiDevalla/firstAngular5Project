@@ -9,6 +9,7 @@ import { PostsComponent } from './components/posts/posts.component';
 import { UsersComponent } from './components/users/users.component';
 import { PostComponent } from './components/post/post.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 const routes: Routes=[
   {path:'',component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes=[
   {path:'users',component: UsersComponent},
   {path:'posts',component: PostsComponent,canActivate:[AuthGuardGuard]},
   {path:'posts/:id',component: PostComponent,canActivate:[AuthGuardGuard]},
+  {path:'logout',component: LogoutComponent},
   {path:'**',component: NotFoundComponent},
 ]
 @NgModule({
