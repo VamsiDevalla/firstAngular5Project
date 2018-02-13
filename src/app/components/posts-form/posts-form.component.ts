@@ -17,7 +17,6 @@ export class PostsFormComponent implements OnInit {
 
   ngOnInit() {
     this.post = {
-      id:0,
       title:"",
       body: "",
     }

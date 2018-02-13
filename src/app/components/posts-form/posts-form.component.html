@@ -39,7 +39,7 @@
             Body must have 10 letters
           </div>
       </div>
-      <input type="hidden" name="id" [(ngModel)]='post.id'>
+      <input type="hidden" name="_id" [(ngModel)]='post._id'>
       <button *ngIf = '!isEditing' class="btn btn-primary btn-block">Post</button>
       <button *ngIf = 'isEditing' class="btn btn-warning btn-block">Edit Post</button>
     </form>

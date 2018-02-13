@@ -9,13 +9,13 @@ const HttpOptions = {
 
 @Injectable()
 export class PostsService {
-  postsUrl = "https://jsonplaceholder.typicode.com/posts"
+  postsUrl = "http://localhost:2000/posts"
   constructor(private http : HttpClient) { }
  getPosts():Observable<Post[]>{
    return this.http.get<Post[]>(this.postsUrl)
  }
 
- getPost(id):Observable<Post>{
+ getPost(id:string):Observable<Post>{
   return this.http.get<Post>(`${this.postsUrl}/${id}`)
 }
 
@@ -24,14 +24,13 @@ export class PostsService {
  }
 
  updatePost(post: Post):Observable<Post>{
-   const url = `${this.postsUrl}/${post.id}`
+   const url = `${this.postsUrl}/${post._id}`
    return this.http.put<Post>(url,post,HttpOptions)
  }
 
- removePost(post: Post | number):Observable<Post>{
-  const id = typeof post === 'number' ? post : post.id
-  const url = `${this.postsUrl}/${id}`
-  return this.http.put<Post>(url,HttpOptions)
+ removePost(post: Post ):Observable<{flag:string}>{
+  const url = `${this.postsUrl}/${post._id}`
+  return this.http.delete<{flag:string}>(url,HttpOptions)
  }
 
 }

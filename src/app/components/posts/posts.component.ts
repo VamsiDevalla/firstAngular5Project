@@ -24,21 +24,16 @@ export class PostsComponent implements OnInit {
 
   onUpdatedPost(post:Post){
     this.isEditing = false
-    this.posts.forEach((cur,index)=>{
-      if(post.id==cur.id){
-        this.posts.splice(index,1)
-        this.posts.unshift(post)
-      }
+    this.PostsService.getPosts().subscribe(posts => {
+      this.posts = posts
     })
   }
 
   removePost(post: Post){
     if(confirm('are you sure?')){
-      this.PostsService.removePost(post.id).subscribe(()=>{
-        this.posts.forEach((cur,index)=>{
-          if(post.id==cur.id){
-            this.posts.splice(index,1)
-          }
+      this.PostsService.removePost(post).subscribe(()=>{
+        this.PostsService.getPosts().subscribe(posts => {
+          this.posts = posts
         })
       })
     }
