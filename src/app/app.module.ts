@@ -16,6 +16,10 @@ import { AppRouterModule } from './/app-router.module';
 import { HomeComponent } from './components/home/home.component';
 import { PostComponent } from './components/post/post.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuardGuard } from './guards/auth-guard.guard';
+import { AuthComponent } from './components/auth/auth.component';
+import { AuthService } from './services/auth.service';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     PostsFormComponent,
     HomeComponent,
     PostComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AuthComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HttpClientModule,
     AppRouterModule,
   ],
-  providers: [UsersService, PostsService],
+  providers: [UsersService, PostsService, AuthGuardGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
